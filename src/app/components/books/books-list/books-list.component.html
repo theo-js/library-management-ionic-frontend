@@ -1,0 +1,34 @@
+<ion-content>
+  <ion-list>
+    <ion-list-header color="light">
+      <ion-label color="primary">{{ (bookService.booksState$ | async)?.totalCount }} books</ion-label>
+    </ion-list-header>
+
+    @for (book of (bookService.booksState$ | async)?.books ?? []; track book.id) {
+      <!-- TODO: handle error state -->
+      <app-book-list-item [book]="book"></app-book-list-item>
+    }
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button id="add-book-modal-trigger">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <app-modal
+    trigger="add-book-modal-trigger"
+    title="Add a book"
+    (confirmed)="handleAddBookConfirmed($event)"
+    [isConfirmDisabled]="addBookForm?.createBookForm().invalid() || ((bookService.isCreatingBook$ | async) ?? false)"
+  >
+    <app-add-book></app-add-book>
+  </app-modal>
+
+  @if (!isEndOfInfiniteScroll()) {
+    <ion-infinite-scroll position="bottom" (ionInfinite)="fetchNextBooks($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more books...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  }
+</ion-content>

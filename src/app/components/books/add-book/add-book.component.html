@@ -1,0 +1,69 @@
+<form (submit)="$event.preventDefault()">
+  <ion-list>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-textarea
+            label="Title:"
+            [formField]="createBookForm.title"
+            [disabled]="bookService.isCreatingBook$ | async"
+          ></ion-textarea>
+        </ion-row>
+        @let titleDisplayedErrors = getDisplayedFieldErrors(createBookForm.title());
+        @if (titleDisplayedErrors.length) {
+          @for (errorMessage of titleDisplayedErrors; track $index) {
+            <ion-row
+              ><ion-note color="danger">
+                {{ errorMessage }}
+              </ion-note>
+            </ion-row>
+          }
+        }
+      </ion-grid>
+    </ion-item>
+
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-input
+            label="Author:"
+            [formField]="createBookForm.author"
+            [disabled]="bookService.isCreatingBook$ | async"
+          />
+        </ion-row>
+        @let authorDisplayedErrors = getDisplayedFieldErrors(createBookForm.author());
+        @if (authorDisplayedErrors.length) {
+          @for (errorMessage of authorDisplayedErrors; track $index) {
+            <ion-row
+              ><ion-note color="danger">
+                {{ errorMessage }}
+              </ion-note>
+            </ion-row>
+          }
+        }
+      </ion-grid>
+    </ion-item>
+
+    <ion-item>
+      <ion-grid>
+        <ion-row
+          ><ion-input
+            label="ISBN number:"
+            [formField]="createBookForm.isbnNumber"
+            [disabled]="bookService.isCreatingBook$ | async"
+          />
+        </ion-row>
+        @let isbnNumberDisplayedErrors = getDisplayedFieldErrors(createBookForm.isbnNumber());
+        @if (isbnNumberDisplayedErrors.length) {
+          @for (errorMessage of isbnNumberDisplayedErrors; track $index) {
+            <ion-row
+              ><ion-note color="danger">
+                {{ errorMessage }}
+              </ion-note>
+            </ion-row>
+          }
+        }
+      </ion-grid>
+    </ion-item></ion-list
+  >
+</form>

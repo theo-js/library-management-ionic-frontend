@@ -4,4 +4,9 @@
 
 export const environment = {
   production: false,
+  backend: {
+    libraryApi: {
+      baseUrl: 'http://localhost:5167',
+    },
+  },
 };
